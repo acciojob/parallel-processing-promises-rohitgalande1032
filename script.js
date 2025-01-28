@@ -11,11 +11,13 @@ const images = [
 
 function downloadImage(image) {
   return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = image.url;
-
-    img.onload = () => resolve(img); // Resolves with the image element if successfully loaded
-    img.onerror = () => reject(`Failed to load image's URL: ${image.url}`);
+	  if(image.url){
+		  resolve(image);
+	  } else{
+		  reject(`Failed to load image's URL: ${image.url}`)
+	  }
+     // Resolves with the image element if successfully loaded
+    
   });
 }
  
@@ -33,7 +35,7 @@ function downloadAllImages(images) {
       // On successful resolution, display all images
       loading.innerHTML = ""; // Remove loading spinner
       loadedImages.forEach((img) => {
-        output.appendChild(img); // Append each image to the output div
+        output.innerHTML += `<img src = ${img.url}>` // Append each image to the output div
       });
     })
     .catch((error) => {
